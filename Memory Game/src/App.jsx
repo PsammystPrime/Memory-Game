@@ -3,7 +3,36 @@ import { useState, useEffect } from "react";
 // import viteLogo from '/vite.svg'
 import "./App.css";
 
-function App() {
+export function Header() {
+  const [score, setScore] = useState(0);
+
+  function addScore() {
+    if (score === 10) {
+      console.log("Congrats"), setScore(0);
+    } else {
+      setScore(score + 1);
+    }
+  }
+  return (
+    <>
+      <div>
+        <h1>Memory Game</h1>
+        <h2>Designed to test your memory</h2>
+        <h3>Rules</h3>
+        <p>
+          Click each item once to proceed. Clicking an item twice will reset
+          your score to zero
+        </p>
+      </div>
+      <div className="scores">
+        <p>Scores: {score}</p>
+        <button onClick={addScore}>Add Score</button>
+      </div>
+    </>
+  );
+}
+
+export function Main() {
   const [data, setData] = useState("");
 
   function handleClick() {
@@ -15,7 +44,7 @@ function App() {
       })
       .then((data) => {
         console.log(data);
-        setData(data.data[0].url);
+        // setData(data.data[0].url);
       })
       .catch(console.error);
   }
@@ -29,4 +58,11 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <Header />
+      <Main />
+    </>
+  );
+}
