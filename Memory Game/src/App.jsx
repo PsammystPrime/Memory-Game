@@ -35,25 +35,37 @@ export function Header() {
 export function Main() {
   const [data, setData] = useState("");
 
-  function handleClick() {
+  // function handleClick() {
+  useEffect(() => {
     fetch(
-      "https://api.giphy.com/v2/emoji?api_key=bqBUyRy9Wth6rjzWQfbNInLdwKct9APl&limit=10&offset=0"
+      "https://api.giphy.com/v2/emoji?api_key=bqBUyRy9Wth6rjzWQfbNInLdwKct9APl&limit=9&offset=0"
     )
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        // setData(data.data[0].url);
+        // console.log(data.data);
+        setData(data.data);
       })
       .catch(console.error);
-  }
+  }, []);
+
   console.log(data);
 
   return (
     <>
-      <button onClick={handleClick}>Click me</button>
-      <img src={data} id="pic" alt="" />
+      <button onClick={"handleClick"}>Click me</button>
+      <div>
+        {data &&
+          data.map((item) => (
+            <img
+              src={item.images.preview_gif.url}
+              id="pic"
+              key={item.id}
+              alt=""
+            />
+          ))}
+      </div>
     </>
   );
 }
