@@ -35,7 +35,6 @@ export function Header() {
 export function Main() {
   const [data, setData] = useState("");
 
-  // function handleClick() {
   useEffect(() => {
     fetch(
       "https://api.giphy.com/v2/emoji?api_key=bqBUyRy9Wth6rjzWQfbNInLdwKct9APl&limit=9&offset=0"
@@ -44,17 +43,25 @@ export function Main() {
         return res.json();
       })
       .then((data) => {
-        // console.log(data.data);
         setData(data.data);
       })
       .catch(console.error);
   }, []);
 
-  console.log(data);
+  // checks if item is present in an array
+  let titleArr = [];
+  function handleClick(e) {
+    if (titleArr.includes(e.target.src)) {
+      console.log("over");
+      titleArr = [];
+    } else {
+      titleArr.push(e.target.src);
+    }
+    console.log(titleArr);
+  }
 
   return (
     <>
-      <button onClick={"handleClick"}>Click me</button>
       <div>
         {data &&
           data.map((item) => (
@@ -63,6 +70,7 @@ export function Main() {
               id="pic"
               key={item.id}
               alt=""
+              onClick={handleClick}
             />
           ))}
       </div>
